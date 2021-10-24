@@ -1,5 +1,8 @@
 plugins {
     id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
     id("com.github.dcendents.android-maven")
 }
 
@@ -21,6 +24,14 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
+    }
+
+    androidExtensions {
+        isExperimental = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 

@@ -1,5 +1,8 @@
 plugins {
     id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
 }
 
 android {
@@ -19,6 +22,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+
+    androidExtensions {
+        isExperimental = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -30,4 +41,7 @@ dependencies {
     implementation("com.android.support:recyclerview-v7:26.1.0")
     testImplementation("junit:junit:4.12")
     implementation(project(":recyclertreeview-lib"))
+}
+repositories {
+    mavenCentral()
 }
