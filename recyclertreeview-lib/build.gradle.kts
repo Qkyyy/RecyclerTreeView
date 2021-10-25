@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0.0"
 
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -37,6 +37,6 @@ android {
 
 dependencies {
     implementation(fileTree("include" to "*.jar", "dir" to "libs"))
-    implementation("com.android.support:appcompat-v7:26.1.0")
-    implementation("com.android.support:recyclerview-v7:26.1.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }

@@ -2,8 +2,8 @@ package tellh.com.recyclertreeview_lib
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import java.lang.UnsupportedOperationException
@@ -49,8 +49,8 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>? = null, private val viewBinders:
         return viewBinders[0].provideViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int, payloads: List<Any>?) {
-        (payloads?.elementAtOrNull(0) as? Bundle)?.let { bundle ->
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        (payloads.elementAtOrNull(0) as? Bundle)?.let { bundle ->
             for (key in bundle.keySet()) {
                 when (key) {
                     KEY_IS_EXPAND -> onTreeNodeListener?.onToggle(bundle.getBoolean(key), holder)
@@ -60,13 +60,13 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>? = null, private val viewBinders:
         super.onBindViewHolder(holder, position, payloads)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            holder?.itemView?.setPaddingRelative(displayNodes[position].getHeight() * padding, 3, 3, 3)
+            holder.itemView.setPaddingRelative(displayNodes[position].getHeight() * padding, 3, 3, 3)
         else
-            holder?.itemView?.setPadding(displayNodes[position].getHeight() * padding, 3, 3, 3)
+            holder.itemView.setPadding(displayNodes[position].getHeight() * padding, 3, 3, 3)
 
-        holder?.itemView?.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val selectedNode = displayNodes[holder.layoutPosition]
             kotlin.runCatching {
                 val lastClickTime = holder.itemView.tag as Long

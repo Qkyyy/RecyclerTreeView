@@ -14,7 +14,7 @@ android {
         targetSdkVersion(31)
         versionCode = 1
         versionName = "1.0.0"
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
@@ -34,11 +34,11 @@ android {
 
 dependencies {
     implementation(fileTree("include" to "*.jar", "dir" to "libs"))
-    testImplementation("com.android.support.test.espresso:espresso-core:2.2.2") {
+    testImplementation("androidx.test.espresso:espresso-core:3.1.0") {
         exclude("com.android.support", "support-annotations")
     }
-    implementation("com.android.support:appcompat-v7:26.1.0")
-    implementation("com.android.support:recyclerview-v7:26.1.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
     testImplementation("junit:junit:4.12")
     implementation(project(":recyclertreeview-lib"))
 }
