@@ -34,7 +34,7 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>?, viewBinders: List<TreeViewBinde
     }
 
     override fun getItemViewType(position: Int): Int {
-        return displayNodes!![position].getContent()!!.getLayoutId()
+        return displayNodes!![position].content!!.getLayoutId()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -79,7 +79,7 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>?, viewBinders: List<TreeViewBinde
                 else notifyItemRangeRemoved(positionStart, removeChildNodes(selectedNode, true))
             }
             viewBinders.forEach {
-                if (it.getLayoutId() == displayNodes[position].getContent()!!.getLayoutId()) it.bindView(hldr, position, displayNodes[position])
+                if (it.getLayoutId() == displayNodes[position].content!!.getLayoutId()) it.bindView(hldr, position, displayNodes[position])
             }
         }
     }
@@ -189,12 +189,12 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>?, viewBinders: List<TreeViewBinde
 
     // For DiffUtil, if they are the same items, whether the contents has bean changed.
     private fun areContentsTheSame(oldNode: TreeNode<*>, newNode: TreeNode<*>): Boolean {
-        return oldNode.getContent() != null && oldNode.getContent() == newNode.getContent() && oldNode.isExpand() == newNode.isExpand()
+        return oldNode.content != null && oldNode.content == newNode.content && oldNode.isExpand() == newNode.isExpand()
     }
 
     // judge if the same item for DiffUtil
     private fun areItemsTheSame(oldNode: TreeNode<*>, newNode: TreeNode<*>): Boolean {
-        return oldNode.getContent() != null && oldNode.getContent() == newNode.getContent()
+        return oldNode.content != null && oldNode.content == newNode.content
     }
 
     /**
@@ -245,7 +245,7 @@ class TreeViewAdapter(nodes: List<TreeNode<*>>?, viewBinders: List<TreeViewBinde
                 if (root.isExpand() && root != pNode) removeChildNodes(root)
             }
         } else {
-            val parent = pNode.getParent() ?: return
+            val parent = pNode.parent ?: return
             val childList = parent.getChildList()
             for (node in childList!!) {
                 if (node == pNode || !node.isExpand()) continue

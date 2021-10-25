@@ -1,55 +1,48 @@
 package tellh.com.recyclertreeview_lib
 
-import java.util.*
+import kotlin.jvm.Throws
 
 /**
  * Created by tlh on 2016/10/1 :)
  */
 
 class TreeNode<T : LayoutItemType?>(content: T) : Cloneable {
-    private var content: T
-    private var parent: TreeNode<*>? = null
-    private var childList: MutableList<TreeNode<*>>?
+    var content: T = content
+    var parent: TreeNode<*>? = null
+
+    private var childList = mutableListOf<TreeNode<*>>()
     private var isExpand = false
     private var isLocked = false
-
-    //the tree high
     private var height = UNDEFINE
-    fun getHeight(): Int {
-        if (isRoot()) height = 0 else if (height == UNDEFINE) height = parent!!.getHeight() + 1
-        return height
+
+    fun getHeight(): Int = if (isRoot()) 0 else if (height == UNDEFINE) parent!!.getHeight() + 1 else height
+    fun getChildList() = childList
+
+    fun isRoot(): Boolean = parent == null
+    fun isLeaf(): Boolean = childList.isEmpty()
+    fun isExpand() = isExpand
+    fun isLocked() = isLocked
+
+    override fun toString() = "TreeNode{content=$content,parent = ${parent?.content?.toString() ?: "null"}, childList = $childList, isExpand = $isExpand}"
+
+    @Throws(CloneNotSupportedException::class)
+    public override fun clone(): TreeNode<T> {
+        val clone = TreeNode(content)
+        clone.isExpand = isExpand
+        return clone
     }
 
-    fun isRoot(): Boolean {
-        return parent == null
+    companion object {
+        private const val UNDEFINE = -1
     }
 
-    fun isLeaf(): Boolean {
-        return childList == null || childList!!.isEmpty()
-    }
-
-    fun setContent(content: T) {
-        this.content = content
-    }
-
-    fun getContent(): T {
-        return content
-    }
-
-    fun getChildList(): kotlin.collections.List<TreeNode<*>>? {
-        return childList
-    }
-
-    fun setChildList(childList: kotlin.collections.List<TreeNode<*>>) {
-        this.childList!!.clear()
-        for (treeNode in childList) {
-            addChild(treeNode)
-        }
+    fun setChildList(childList: List<TreeNode<*>>) {
+        this.childList.clear()
+        childList.forEach { addChild(it) }
     }
 
     fun addChild(node: TreeNode<*>): TreeNode<*> {
-        if (childList == null) childList = ArrayList()
-        childList!!.add(node)
+        childList.add(node)
         node.parent = this
         return this
     }
@@ -60,17 +53,14 @@ class TreeNode<T : LayoutItemType?>(content: T) : Cloneable {
     }
 
     fun collapse() {
-        if (isExpand) {
+        if (isExpand)
             isExpand = false
-        }
     }
 
     fun collapseAll() {
-        if (childList == null || childList!!.isEmpty()) {
-            return
-        }
-        for (child in childList!!) {
-            child.collapseAll()
+        collapse()
+        childList.takeIf { children -> children.isNotEmpty() }?.let { children ->
+            children.forEach { child -> child.collapseAll() }
         }
     }
 
@@ -82,24 +72,9 @@ class TreeNode<T : LayoutItemType?>(content: T) : Cloneable {
 
     fun expandAll() {
         expand()
-        if (childList == null || childList!!.isEmpty()) {
-            return
+        childList.takeIf { children -> children.isNotEmpty() }?.let { children ->
+            children.forEach { child -> child.expandAll() }
         }
-        for (child in childList!!) {
-            child.expandAll()
-        }
-    }
-
-    fun isExpand(): Boolean {
-        return isExpand
-    }
-
-    fun setParent(parent: TreeNode<*>?) {
-        this.parent = parent
-    }
-
-    fun getParent(): TreeNode<*>? {
-        return parent
     }
 
     fun lock(): TreeNode<T> {
@@ -110,34 +85,5 @@ class TreeNode<T : LayoutItemType?>(content: T) : Cloneable {
     fun unlock(): TreeNode<T> {
         isLocked = false
         return this
-    }
-
-    fun isLocked(): Boolean {
-        return isLocked
-    }
-
-    override fun toString(): String {
-        return "TreeNode{" +
-                "content=" + content +
-                ", parent=" + (if (parent == null) "null" else parent!!.getContent().toString()) +
-                ", childList=" + (if (childList == null) "null" else childList.toString()) +
-                ", isExpand=" + isExpand +
-                '}'
-    }
-
-    @kotlin.Throws(CloneNotSupportedException::class)
-    public override fun clone(): TreeNode<T> {
-        val clone = TreeNode(content)
-        clone.isExpand = isExpand
-        return clone
-    }
-
-    companion object {
-        private const val UNDEFINE = -1
-    }
-
-    init {
-        this.content = content
-        childList = ArrayList()
     }
 }

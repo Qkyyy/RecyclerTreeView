@@ -24,7 +24,7 @@ class DirectoryNodeBinder : TreeViewBinder<DirectoryNodeBinder.ViewHolder>() {
             holder.ivArrow.rotation = 0f
             holder.ivArrow.setImageResource(R.drawable.ic_keyboard_arrow_right_black_18dp)
             holder.ivArrow.rotation = if (node?.isExpand() == true) 90f else 0f
-            val dirNode = (node?.getContent() as? Dir)
+            val dirNode = (node?.content as? Dir)
             holder.tvName.text = dirNode?.dirName
             holder.ivArrow.visibility = if (node?.isLeaf() == true) View.INVISIBLE else View.VISIBLE
         }

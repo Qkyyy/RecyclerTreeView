@@ -20,7 +20,7 @@ class FileNodeBinder : TreeViewBinder<FileNodeBinder.ViewHolder>() {
 
     override fun <VH> bindView(holder: VH, position: Int, node: TreeNode<*>?) {
         with (holder as ViewHolder) {
-            holder.tvName.text = (node?.getContent() as? File)?.fileName
+            holder.tvName.text = (node?.content as? File)?.fileName
         }
     }
 
