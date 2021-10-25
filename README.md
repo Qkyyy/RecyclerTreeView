@@ -1,3 +1,10 @@
+# Disclaimer
+This repository was forked from [RecyclerTreeView](https://github.com/TellH/RecyclerTreeView) and belongs to [@TellH](https://github.com/TellH/RecyclerTreeView).
+
+Due to no maintainers left, I've decided to fork it so I can rewrite it to Kotlin and possibly update it to nowadays standards and add some more functionalities.
+If you want to contribute, just make a pull request.
+If you want some functionality to be added, just raise an issue and describe it there.
+
 # RecyclerTreeView
 [![](https://jitpack.io/v/TellH/RecyclerTreeView.svg)](https://jitpack.io/#TellH/RecyclerTreeView)</br>
 TreeView implement in Android with RecyclerView..
